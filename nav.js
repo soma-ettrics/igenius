@@ -164,8 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        // Replace 'YOUR_API_KEY' with your actual ipgeolocation.io API key
-        const apiKey = 'YOUR_API_KEY';
+        const apiKey = 'f353c3692c704fdf893daa8281ee8707';
 
         // Construct the URL for the ipgeolocation.io API
         const apiUrl = `https://api.ipgeolocation.io/timezone?apiKey=${apiKey}&lat=${latitude}&long=${longitude}`;
