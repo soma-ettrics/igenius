@@ -180,7 +180,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
           types: "lines, words"
         });
       }
-      //runUiSplit();
   
       function animateSplitWords(dataAttribute) {
         // Get all elements with the specified data attribute
