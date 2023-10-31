@@ -156,40 +156,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
   });
 });
-// document.addEventListener("DOMContentLoaded", function () {
-//     const userLocation = document.getElementById("user_location");
+        // Function to fetch user's location and update the label
+        function getUserLocation() {
+            $.ajax({
+                url: "https://api.ipgeolocation.io/ipgeo?apiKey=f353c3692c704fdf893daa8281ee8707", 
+                type: "GET",
+                success: function(response) {
+                    // Update the label with the user's country
+                    $('#user_location').text("User's Location: " + response.country_name);
+                },
+                error: function(error) {
+                    console.error("Failed to fetch user location: " + error);
+                    $('#user_location').text("User's Location: Unknown");
+                }
+            });
+        }
 
-//     if (navigator.geolocation) {
-//       navigator.geolocation.getCurrentPosition((position) => {
-//         const latitude = position.coords.latitude;
-//         const longitude = position.coords.longitude;
-
-//         const apiKey = 'f353c3692c704fdf893daa8281ee8707';
-
-//         // Construct the URL for the ipgeolocation.io API
-//         const apiUrl = `https://api.ipgeolocation.io/timezone?apiKey=${apiKey}&lat=${latitude}&long=${longitude}`;
-
-//         // Make a request to the ipgeolocation.io API
-//         fetch(apiUrl)
-//           .then((response) => response.json())
-//           .then((data) => {
-//             if (data && data.country_name) {
-//               const country = data.country_name;
-//               userLocation.textContent = `Your country is ${country}`;
-//             } else {
-//               userLocation.textContent = "Country data not available.";
-//             }
-//           })
-//           .catch((error) => {
-//             userLocation.textContent = `Error getting country: ${error}`;
-//           });
-//       }, (error) => {
-//         userLocation.textContent = `Error getting location: ${error.message}`;
-//       });
-//     } else {
-//       userLocation.textContent = "Your browser does not support geolocation.";
-//     }
-//   });
+        // Call the function to get the user's location when the page loads
+        getUserLocation();
 
 $(function () {
   function changeTab() {
