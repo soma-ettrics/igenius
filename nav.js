@@ -156,24 +156,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
   });
 });
-        // Function to fetch user's location and update the label
-        function getUserLocation() {
-            $.ajax({
-                url: "https://api.ipgeolocation.io/ipgeo?apiKey=f353c3692c704fdf893daa8281ee8707", 
-                type: "GET",
-                success: function(response) {
-                    // Update the label with the user's country
-                    $('#user_location').text("User's Location: " + response.country_name);
-                },
-                error: function(error) {
-                    console.error("Failed to fetch user location: " + error);
-                    $('#user_location').text("User's Location: Unknown");
-                }
-            });
-        }
+// Function to fetch user's location and update the label
+function getUserLocation() {
+    fetch('https://ipinfo.io/json')
+        .then(response => response.json())
+        .then(data => {
+            const country = data.country;
+            const locationLabel = document.getElementById('user_location');
+            locationLabel.textContent = `User's Location: ${country}`;
+        })
+        .catch(error => {
+            console.error("Failed to fetch user location: " + error);
+            const locationLabel = document.getElementById('user_location');
+            locationLabel.textContent = "User's Location: Unknown";
+        });
+}
 
-        // Call the function to get the user's location when the page loads
-        getUserLocation();
+// Call the function to get the user's location when the page loads
+getUserLocation();
 
 $(function () {
   function changeTab() {
