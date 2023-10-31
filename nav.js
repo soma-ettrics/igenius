@@ -156,19 +156,41 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
   });
 });
-document.addEventListener("DOMContentLoaded", function (event) {
-  if (navigator.geolocation)
-    navigator.geolocation.getCurrentPosition((o) => {
-      let e = o.coords.latitude,
-        t = o.coords.longitude,
-        n = document.querySelector("#user_location");
-      n.textContent = `Your location is ${e}, ${t}`;
-    });
-  else {
-    let o = document.querySelector("#user_location");
-    o.textContent = "Your browser does not support geolocation.";
-  }
-});
+document.addEventListener("DOMContentLoaded", function () {
+    const userLocation = document.getElementById("user_location");
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Replace 'YOUR_API_KEY' with your actual ipgeolocation.io API key
+        const apiKey = 'YOUR_API_KEY';
+
+        // Construct the URL for the ipgeolocation.io API
+        const apiUrl = `https://api.ipgeolocation.io/timezone?apiKey=${apiKey}&lat=${latitude}&long=${longitude}`;
+
+        // Make a request to the ipgeolocation.io API
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.country_name) {
+              const country = data.country_name;
+              userLocation.textContent = `Your country is ${country}`;
+            } else {
+              userLocation.textContent = "Country data not available.";
+            }
+          })
+          .catch((error) => {
+            userLocation.textContent = `Error getting country: ${error}`;
+          });
+      }, (error) => {
+        userLocation.textContent = `Error getting location: ${error.message}`;
+      });
+    } else {
+      userLocation.textContent = "Your browser does not support geolocation.";
+    }
+  });
 
 $(function () {
   function changeTab() {
